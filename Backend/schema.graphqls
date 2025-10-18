@@ -1,0 +1,95 @@
+type User {
+  id: ID!
+  name: String!
+  email: String!
+  createdAt: String!
+  lastLoginAt: String!
+  isActive: Boolean!
+  currentRide: String
+  picture: String
+}
+
+type Ride {
+  id: ID!
+  rideCode: String!
+  status: String!
+  createdAt: String!
+  createdBy: String!
+  startedAt: String
+  endedAt: String
+  participants: [Participant!]!
+  settings: RideSettings!
+  start: GeoLocation!
+  destination: GeoLocation!
+  startName: String!
+  destinationName: String!
+  tripName: String!
+}
+
+type Participant {
+  userId: ID!
+  role: String!
+  joinedAt: String!
+}
+
+type RideSettings {
+  maxRiders: Int!
+  visibility: String!
+}
+
+type GeoLocation {
+  lat: Float!
+  lng: Float!
+}
+
+type Signal {
+  id: ID!
+  rideCode: String!
+  fromUser: ID!
+  type: String!
+  timestamp: String!
+  location: GeoLocation
+}
+
+type Query {
+  me: User!
+  ride(rideCode: String!): Ride!
+  myRides: [Ride!]!
+  user(userId: String!): User!
+  usersByIds(ids: [ID!]!): [User!]!
+
+}
+
+type Mutation {
+  createRide(
+    maxRiders: Int!
+    visibility: String!
+    startLat: Float!
+    startLng: Float!
+    destinationLat: Float!
+    destinationLng: Float!
+    startName: String!
+    destinationName: String!
+    tripName: String!
+  ): Ride!
+
+  updateRide(
+    rideCode: String!
+    requestType: String
+    maxRiders: Int
+    visibility: String
+    endedAt: String
+    startedAt: String
+    status: String
+    tripName: String
+  ): Ride!
+
+  joinRide(rideCode: String!, role: String!): Ride!
+
+  sendSignal(
+    rideCode: String!
+    signalType: String!
+    lat: Float
+    lng: Float
+  ): Boolean!
+}

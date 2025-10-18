@@ -1,0 +1,14 @@
+package models
+
+import (
+    "go.mongodb.org/mongo-driver/bson/primitive"
+)
+
+type Signal struct {
+    ID        primitive.ObjectID `bson:"_id,omitempty" json:"id"`
+    RideCode  string             `bson:"rideCode" json:"rideCode"`
+    FromUser  primitive.ObjectID `bson:"fromUser" json:"fromUser"`
+    Type      string             `bson:"type" json:"type"`
+    Timestamp string `bson:"timestamp" json:"timestamp"`
+    Location  *GeoLocation       `bson:"location,omitempty" json:"location,omitempty"`
+}
